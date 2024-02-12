@@ -1,0 +1,59 @@
+/* Sidebar.css */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px; /* Set a fixed width */
+    background-color: transparent; /* Set a background color */
+    padding: 20px 0;
+    float: left;
+  }
+  
+  .sidebar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+
+  }
+  
+  /* Sidebar.css */
+
+
+  .circle {
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    border-radius: 50%;
+    background-color: cornflowerblue; /* Set transparent orange color */
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* Set text color */
+    font-weight: bold;
+    box-sizing: border-box; /* Ensure padding and border don't affect the size */
+    transition: background-color 0.3s ease; /* Add transition for smooth color change */
+  }
+  
+  .sidebar-item.active .circle {
+    background-color: blue(255, 166, 0); /* Set a more highlighted orange color for the active state */
+  }
+  
+  .sidebar-item:not(.active):hover .circle {
+    background-color: blue(255, 166, 0); /* Set a different color for hover state */
+  }
+  .active {
+    background-color: #2ecc71;
+    color: #fff;
+  }
+  .sidebar-container {
+  display: flex;
+  float: right;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}

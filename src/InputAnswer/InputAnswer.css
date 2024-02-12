@@ -1,0 +1,17 @@
+.number-input-container {
+    text-align: center;
+    margin-top: 5px;
+    color:black;
+    width: 50%;
+  }
+  
+  .number-input {
+    padding: 5px;
+    font-size: 10px;
+    border-color: black;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 5px;
+  }

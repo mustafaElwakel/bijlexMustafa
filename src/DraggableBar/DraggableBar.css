@@ -1,0 +1,24 @@
+/* DraggableBar.css */
+
+.draggable-bar {
+  width: 600px; /* Adjust width as needed */
+  height: 8px; /* Adjust height as needed */
+  background-color: blue; /* Adjust color as needed */
+  position: relative;
+  margin: 20px auto; /* Center the bar */
+  overflow: hidden; /* Ensure handle stays within bounds */
+}
+
+.handle {
+  width: 60px; /* 10% of the bar width */
+  height: 60px; /* Set the same height to make it a perfect circle */
+  border-radius: 50%; /* Make it a circle */
+  background-color: black; /* Adjust color as needed */
+  cursor: grab;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: left 0.5s ease; /* Add transition for smoother movement */
+}
+
+
