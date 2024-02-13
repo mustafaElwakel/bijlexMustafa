@@ -22,17 +22,21 @@ const App = () => {
         setLineY(newLineY);
       }
     };
-
+  
     const handleMouseUp = () => {
       setDragging(false);
     };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-
+  
+    if (graphRef.current) {
+      graphRef.current.addEventListener('mousemove', handleMouseMove);
+      graphRef.current.addEventListener('mouseup', handleMouseUp);
+    }
+  
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      if (graphRef.current) {
+        graphRef.current.removeEventListener('mousemove', handleMouseMove);
+        graphRef.current.removeEventListener('mouseup', handleMouseUp);
+      }
     };
   }, [dragging, offsetY]);
 
@@ -107,8 +111,10 @@ const App = () => {
           { x: -10, y: calculateLineY(-10) },
           { x: 10, y: calculateLineY(10) }
         ],
-        itemMouseMove: () => {
-          console.error("20002")
+        itemMouseMove: (event) => {
+          // Update line position based on user input
+          const actualX = Math.max(-10, Math.min(10, (event.clientX - graphBounds.left) / (graphBounds.right - graphBounds.left) * 20 - 10));
+          setLineY(calculateLineY(actualX));
         },
       }
     ]
@@ -121,7 +127,7 @@ const App = () => {
         style={{ width: '500px', height: '500px', position: 'relative', border: '1px solid #ccc' , flexDirection: 'end',}}
       >
         <CanvasJSChart options={options} />
-         
+
       </div>
 
       <div>
@@ -133,7 +139,7 @@ const App = () => {
           onChange={(e) => setSlope(parseFloat(e.target.value))}
         />
       </div>
-      
+
       <div>
         <label htmlFor="intercept">Y-Intercept (b): </label>
         <input
@@ -143,7 +149,7 @@ const App = () => {
           onChange={(e) => setIntercept(parseFloat(e.target.value))}
         />
       </div>  
-      
+
     </div>
   );
 };
