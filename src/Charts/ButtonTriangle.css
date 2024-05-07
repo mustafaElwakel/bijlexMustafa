@@ -1,0 +1,17 @@
+.button-triangle, .button-zoom {
+    position: absolute;
+    margin-top: 80px;
+    background-color:#0a0a23;
+    color: #fff;
+    border:none; 
+    border-radius:10px; 
+    padding:15px;
+    min-height:30px; 
+    min-width: 120px;
+    margin-left: 20%;
+}
+
+.button-triangle:hover, .button-zoom:hover {
+    background-color:#002ead;
+    transition: 0.7s;
+}

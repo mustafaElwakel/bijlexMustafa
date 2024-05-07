@@ -5,7 +5,8 @@ import QuestionDetails from './QuestionDetails';
 import questionsData from './data.js';
 import Sidebar from './SideBar/SideBar.jsx';
 import InputAnswer from './InputAnswer/InputAnswer.jsx';
-
+import { Route, Router, Routes } from 'react-router-dom';
+import Chart1 from './Charts/Chart1.jsx';
 function App() {
 
     const handleDrag = (position) => {
@@ -35,11 +36,11 @@ function App() {
 
     <div class = "center">
         <div className="sidebar-container">
-      <Sidebar
+      {/* <Sidebar
           questionsData={questionsData}
           currentQuestion={currentQuestion}
           onClick={handleSidebarClick}
-        />
+        /> */}
       </div>
       <div>
         {currentQuestion && <QuestionDetails {...currentQuestion} />}
@@ -50,8 +51,17 @@ function App() {
         {/* <CheckAnswer/> */}
     </div>
 
-  );
 
+
+  // );
+  // return (
+  //   <Router>
+  //     <Routes>
+  //       <Route path="/" element={<Chart1 />} />
+      
+  //     </Routes>
+  //   </Router>
+  );
 }
 
 export default App;

@@ -1,98 +1,81 @@
-import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
 
-const DraggableGraph = () => {
-  const [slope, setSlope] = useState(0);
-  const [yIntercept, setYIntercept] = useState(0);
+import { Row, Col, Button } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { color } from 'd3';
+import { getQuestion } from '../utils/utils';
+import { Link, useNavigate } from "react-router-dom";
+import QuestionList from '../utils/questionsPage';
+import { Routes, Route } from 'react-router-dom';
 
-  const data = {
-    labels: Array.from({length: 21}, (_, i) => i - 10),
-    datasets: [{
-      data: Array.from({length: 21}, (_, i) => slope * (i - 10) + yIntercept),
-      borderColor: 'blue',
-      borderWidth: 1,
-      pointRadius: 0,
-      spanGaps: false,
-    }],
-  };
 
-  const options = {
-    scales: {
-      x: {
-        type: 'linear',
-        position: 'center',
-        min: -10,
-        max: 10,
-        grid: {
-          display: true,
-          color: 'grey',
-        },
-        ticks: {
-          fontColor: '#3C3C3C',
-          fontSize: 14,
-        },
-      },
-      y: {
-        type: 'linear',
-        position: 'center',
-        min: -10,
-        max: 10,
-        grid: {
-          display: true,
-          color: 'grey',
-        },
-        ticks: {
-          fontColor: '#3C3C3C',
-          fontSize: 14,
-        },
-      },
-    },
+function ContainerExample() {
+    const [selection, setSelection] = useState([])
+    let navigate = useNavigate();
 
-    plugins: {
-      legend: {
-        display: false
-      },
-    },
-    interaction: {
-      mode: 'nearest',
-      intersect: false,
-      axis: 'x'
-    },
-    elements: {
-      point: {
-        radius: 0
-      }
-    },
-    plugins: {
-      dragData: true,
-      dragOptions: {
-        showTooltip: true
-      },
-      onDragStart: function(e) {
-        console.log(e)
-      },
-      onDrag: function(e, datasetIndex, index, value) {
-        console.log(datasetIndex, index, value)
-      },
-      onDragEnd: function(e, datasetIndex, index, value) {
-        console.log(datasetIndex, index, value)
-      },
-    },
-  };
+    const rowCount = 5;
+    const columnCout = 5;
+    const handleClick = (index) => {
+        setSelection((prevSelection) => {
+            if (prevSelection.includes(index)) {
+                const newSelection = prevSelection.filter(e => e !== index);
+                return newSelection;
+            } else {
+                const newSelection = [...prevSelection, index];
+                if (newSelection.length >= 5) {
+                    navigate(`/questions?q=${newSelection.join(',')}`)
+                    // <Routes>
+                    // <Route path="../utils/questionPage" element={<QuestionList />} />
+                    // </Routes>
+                }
+                return newSelection;
+            }
+        })
+    }
 
-  return (
-    <div>
-      <Line data={data} options={options} />
-      <div>
-        <label>Slope:</label>
-        <input type="number" value={slope} onChange={(e) => setSlope(+e.target.value)} />
-      </div>
-      <div>
-        <label>Y Intercept:</label>
-        <input type="number" value={yIntercept} onChange={(e) => setYIntercept(+e.target.value)} />
-      </div>
-    </div>
-  );
-};
+    // const getColumn = (rowIndex, columnIndex) => {
+    //     const existingSelection = selection.find(r => r.row === rowIndex && r.column === columnIndex);
+    //     return (
+    //         <Col key={rowIndex + '-' + columnIndex} onClick={() => { handleClick(rowIndex, columnIndex) }}>
+    //             {/* {questions?.[rowIndex * columnCout + columnIndex] || 'test'} */}
+    //             {existingSelection && <p>*</p>}
+    //         </Col>
+    //     );
+    // }
+    // const getRow = (rowIndex) => {
+    //     const columns = [];
+    //     for (let i = 0; i < columnCout; i++) {
+    //         columns.push(getColumn(rowIndex, i));
+    //     }
+        
+    //     return (
+    //         <Row key={rowIndex}>
+    //             {columns}
+    //         </Row>
+    //     );
+    // }
 
-export default DraggableGraph;
+    // const rows = [];
+    // for (let i = 0; i < rowCount; i++) {
+    //     rows.push(getRow(i));
+    // }
+
+
+    const getDiv = (index) => {
+
+        const className = selection.includes(index) ? 'selected-cell' : 'not-selected-cell';
+        return <div onClick={() => { handleClick(index) }} className={className}>{getQuestion(index).label}{selection.includes(index)}</div>
+    }
+    //Add button to submit the cuurent selection
+    const contents = [];
+    for (let i = 0; i < 25; i++) {
+        contents.push(getDiv(i));
+    }
+    return <div>
+        <div className='mygrid-container'>
+            {contents}
+        </div>
+    </div>;
+
+}
+
+export default ContainerExample;
