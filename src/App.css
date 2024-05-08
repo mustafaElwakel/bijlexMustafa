@@ -1,5 +1,7 @@
 @import "Charts/Chart1.css";
-
+@import "Exercises/QuestionBlock.css";
+@import "Exercises/MatchingFractions.css";
+@import "Exercises/AnswerBlock.css";
 
 .App {
   text-align: center;
