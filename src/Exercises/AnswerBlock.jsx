@@ -1,22 +1,27 @@
-import React from 'react';
-import Draggable from 'react-draggable';
+import React, { useState } from 'react';
+import { useDrag } from 'react-dnd';
 
+let tempAnswer = "0";
 
-// TODO add css for Question 
-
-function AnswerBlock({question}) {
-
-    return (
-    <Draggable >
-        <div className='answer-option-main__div'>
-        <h3>{question}</h3>
-        </div>
-    </Draggable>
-
-);
-
+export function getCurrentAnswer() {
+    return tempAnswer;
 }
 
+function AnswerBlock({ answer }) {
+    tempAnswer = answer;
 
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: answer,
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    }));
+
+    return (
+        <div className='answer-option-main__div' ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
+            <h3>{answer}</h3>
+        </div>
+    );
+}
 
 export default AnswerBlock;
