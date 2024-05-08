@@ -2,6 +2,7 @@
 @import "Exercises/QuestionBlock.css";
 @import "Exercises/MatchingFractions.css";
 @import "Exercises/AnswerBlock.css";
+@import "Exercises/DuoLingo.css";
 
 .App {
   text-align: center;
