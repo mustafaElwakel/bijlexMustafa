@@ -1,40 +1,30 @@
-import React from 'react';
-import {DropZone, Text} from 'react-aria-components';
-import AnswerBlock from './AnswerBlock';
-import { getCurrentAnswer } from './AnswerBlock';
-
-// TODO add css for Question 
-
-
-
-
+import React, { useState } from 'react';
+import { useDrop } from 'react-dnd';
 
 function QuestionBlock({question}) {
-  const checkAnswers = () => {
+    let [droppedAnswers, setDroppedAnswers] = useState([]);
 
-    };
-  var currAnswer = getCurrentAnswer(currAnswer)
-    let [dropped, setDropped] = React.useState(false);
-    let [answer, setAnswer] = React.useState("ans");
+    const [, drop] = useDrop(() => ({
+        accept: 'answer',
+        drop: (item, monitor) => {
 
+            setDroppedAnswers(prevState => [...prevState, item.answer]);
+   
+    },
+    }));
 
     return (
-    <div className='question-block__div'>
-    <h1>{question}</h1>
-    <DropZone className='answer-block__div'
-      onDrop={() => {
-        setDropped(true);
-      }}>
-      <Text slot="label" backgroundcolor = "'red" className='answer-option-main__div'>
-        {dropped ? currAnswer  : "Drop Answer here"}
-      </Text>
-    </DropZone>
-    
-
-    </div>
-
-);
-
+        <div className='question-block__div'>
+            <h1>{question}</h1>
+            <div ref={drop} className='answer-block__div'>
+                {droppedAnswers.length > 0 ? droppedAnswers.map((answer, index) => (
+                    <div key= {index} className='answer-option-main__div' style= {{backgroundColor: '#007BFF', color: 'white', margin: '10px', padding: '10px'}}>
+                        {answer}
+                    </div>
+                )) : <div className='answer-option-main__div'>Drag answer here</div>}
+            </div>
+        </div>
+    );
 }
 
 export default QuestionBlock;

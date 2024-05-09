@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDrag } from 'react-dnd';
 
-let tempAnswer = "0";
-
-export function getCurrentAnswer() {
-    return tempAnswer;
-}
-
 function AnswerBlock({ answer }) {
-    tempAnswer = answer;
-
     const [{ isDragging }, drag] = useDrag(() => ({
-        type: answer,
+        type: 'answer',
+        item: { answer },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
         }),
