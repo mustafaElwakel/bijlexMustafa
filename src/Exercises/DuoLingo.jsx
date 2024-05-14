@@ -26,13 +26,15 @@ function AnswerBlock({ answer }) {
         </div>
     );
 }
-function DropSpace({ onDrop }) {
+function DropSpace({ onDrop, expectedAnswer }) {
     const [droppedAnswer, setDroppedAnswer] = useState(null);
+    const [backgroundColor, setBackgroundColor] = useState('transparent');
     const [{ isOver }, drop] = useDrop(() => ({
         accept: 'answer',
         drop: (item, monitor) => {
             onDrop(item.answer);
             setDroppedAnswer(item.answer);
+            setBackgroundColor(item.answer === expectedAnswer ? 'green' : 'red');
         },
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
@@ -40,7 +42,7 @@ function DropSpace({ onDrop }) {
     }));
 
     return (
-        <span className='drop-space' ref={drop} style={{ backgroundColor: isOver ? '#e0e0e0' : 'transparent' }}>
+        <span className='drop-space' ref={drop} style={{ backgroundColor: backgroundColor }}>
             {droppedAnswer || ""}
         </span>
     );
@@ -48,7 +50,8 @@ function DropSpace({ onDrop }) {
 
 
 
-function Paragraph({ text, answers }) {
+
+function Paragraph({ text, correctText }) {
     const [state, setState] = useState(Array(text.length).fill(null));
 
     const handleDrop = (answer, index) => {
@@ -56,13 +59,13 @@ function Paragraph({ text, answers }) {
         newState[index] = answer;
         setState(newState);
     };
+   
 
     return (
         <p>
             {text.map((word, index) => (
                 <span key={index}>
-                    {word}
-                    {answers.includes(word) ? <DropSpace onDrop={(answer) => handleDrop(answer, index)} /> : ' '}
+                    {word==='?'? <DropSpace expectedAnswer={correctText[index]} onDrop={(answer) => handleDrop(answer, index)} /> : word} 
                 </span>
             ))}
         </p>
@@ -70,15 +73,16 @@ function Paragraph({ text, answers }) {
 }
 
 function App() {
-    const text = ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog'];
+    const text = ['The', '?', 'brown', '?', '?', 'over', ' the', '?', '?'];
     const answers = ['quick', 'fox', 'jumps', 'lazy', 'dog'];
-
+    const correctText = ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog'];
     return (
         <DndProvider backend={HTML5Backend}>
-            <Paragraph text={text} answers={answers} />
+            <Paragraph text={text} correctText={correctText} />
             {answers.map((answer, index) => (
                 <AnswerBlock key={index} answer={answer} />
             ))}
+            
         </DndProvider>
     );
 }
