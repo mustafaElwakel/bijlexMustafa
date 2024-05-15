@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -26,7 +26,8 @@ function AnswerBlock({ answer }) {
         </div>
     );
 }
-function DropSpace({ onDrop, expectedAnswer }) {
+
+function DropSpace({ onDrop, expectedAnswer, checkAnswers }) {
     const [droppedAnswer, setDroppedAnswer] = useState(null);
     const [backgroundColor, setBackgroundColor] = useState('transparent');
     const [{ isOver }, drop] = useDrop(() => ({
@@ -34,24 +35,26 @@ function DropSpace({ onDrop, expectedAnswer }) {
         drop: (item, monitor) => {
             onDrop(item.answer);
             setDroppedAnswer(item.answer);
-            setBackgroundColor(item.answer === expectedAnswer ? 'green' : 'red');
         },
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
     }));
 
+    useEffect(() => {
+        if (checkAnswers && droppedAnswer) {
+            setBackgroundColor(droppedAnswer === expectedAnswer ? 'green' : 'red');
+        }
+    }, [checkAnswers, droppedAnswer, expectedAnswer]);
+
     return (
-        <span className='drop-space' ref={drop} style={{ backgroundColor: backgroundColor }}>
+        <span className='drop-space' ref={drop} style={{ backgroundColor: checkAnswers ? backgroundColor : 'transparent' }}>
             {droppedAnswer || ""}
         </span>
     );
 }
 
-
-
-
-function Paragraph({ text, correctText }) {
+function Paragraph({ text, correctText, checkAnswers }) {
     const [state, setState] = useState(Array(text.length).fill(null));
 
     const handleDrop = (answer, index) => {
@@ -59,13 +62,12 @@ function Paragraph({ text, correctText }) {
         newState[index] = answer;
         setState(newState);
     };
-   
 
     return (
         <p>
             {text.map((word, index) => (
                 <span key={index}>
-                    {word==='?'? <DropSpace expectedAnswer={correctText[index]} onDrop={(answer) => handleDrop(answer, index)} /> : word} 
+                    {word==='?'? <DropSpace expectedAnswer={correctText[index]} onDrop={(answer) => handleDrop(answer, index)} checkAnswers={checkAnswers} /> : word} 
                 </span>
             ))}
         </p>
@@ -76,13 +78,15 @@ function App() {
     const text = ['The', '?', 'brown', '?', '?', 'over', ' the', '?', '?'];
     const answers = ['quick', 'fox', 'jumps', 'lazy', 'dog'];
     const correctText = ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog'];
+    const [checkAnswers, setCheckAnswers] = useState(false);
+
     return (
         <DndProvider backend={HTML5Backend}>
-            <Paragraph text={text} correctText={correctText} />
+            <Paragraph text={text} correctText={correctText} checkAnswers={checkAnswers} />
             {answers.map((answer, index) => (
                 <AnswerBlock key={index} answer={answer} />
             ))}
-            
+            <button onClick={() => setCheckAnswers(true)}>Check Answers</button>
         </DndProvider>
     );
 }
