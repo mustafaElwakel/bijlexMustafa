@@ -3,7 +3,7 @@ import React from "react";
 import DuoLingo from "./Exercises/DuoLingo.jsx";
 import DropDownLingo from "./Exercises/DropDownLingo.jsx";
 import SlotMachine from "./Exercises/SlotMachine.jsx";
-
+import MagicSquare from "./Exercises/MagicSquare.jsx";
 import SlotMachineV2 from "./Exercises/SlotMachineV2.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import App from "./App.jsx";
@@ -25,6 +25,9 @@ const MainRouter = () => {
         
         <Route path="/slotmachine2" element={<SlotMachineV2/>} />
         
+        <Route path="/magic" element={<MagicSquare/>} />
+
+
       </Routes>
     </Router>)
 };

@@ -4,6 +4,7 @@
 @import "Exercises/AnswerBlock.css";
 @import "Exercises/DuoLingo.css";
 
+@import "Exercises/MagicSquare.css";
 .App {
   text-align: center;
 }
