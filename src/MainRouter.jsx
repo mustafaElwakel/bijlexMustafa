@@ -10,7 +10,10 @@ import App from "./App.jsx";
 import QuestionList from "./utils/questionsPage.jsx";
 import Chart2 from "./Charts/Chart6.jsx";
 import MatchingFractions from "./Exercises/MatchingFractions.jsx";
+import DivisibleNumber from "./Exercises/DivisibleNumber.jsx";
+import TableEquation from "./Exercises/TableEquation.jsx";
 
+import TableEquationExtra from "./Exercises/TableEquationExtra.jsx";
 const MainRouter = () => {
    return (
     <Router>
@@ -26,6 +29,10 @@ const MainRouter = () => {
         <Route path="/slotmachine2" element={<SlotMachineV2/>} />
         
         <Route path="/magic" element={<MagicSquare/>} />
+        <Route path="/divide" element={<DivisibleNumber/>} />
+
+        <Route path="/eqtable" element={<TableEquation/>} />
+        <Route path="/eqtable2" element={<TableEquationExtra/>} />
 
 
       </Routes>

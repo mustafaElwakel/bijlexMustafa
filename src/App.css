@@ -2,9 +2,13 @@
 @import "Exercises/QuestionBlock.css";
 @import "Exercises/MatchingFractions.css";
 @import "Exercises/AnswerBlock.css";
+@import "Exercises/DivisibleNumber.css";
 @import "Exercises/DuoLingo.css";
-
 @import "Exercises/MagicSquare.css";
+@import "Exercises/TableEquation.css";
+
+@import "Exercises/TableEquationExtra.css";
+
 .App {
   text-align: center;
 }

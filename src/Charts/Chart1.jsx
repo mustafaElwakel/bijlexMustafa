@@ -23,41 +23,12 @@ function ContainerExample() {
                 const newSelection = [...prevSelection, index];
                 if (newSelection.length >= 5) {
                     navigate(`/questions?q=${newSelection.join(',')}`)
-                    // <Routes>
-                    // <Route path="../utils/questionPage" element={<QuestionList />} />
-                    // </Routes>
+
                 }
                 return newSelection;
             }
         })
     }
-
-    // const getColumn = (rowIndex, columnIndex) => {
-    //     const existingSelection = selection.find(r => r.row === rowIndex && r.column === columnIndex);
-    //     return (
-    //         <Col key={rowIndex + '-' + columnIndex} onClick={() => { handleClick(rowIndex, columnIndex) }}>
-    //             {/* {questions?.[rowIndex * columnCout + columnIndex] || 'test'} */}
-    //             {existingSelection && <p>*</p>}
-    //         </Col>
-    //     );
-    // }
-    // const getRow = (rowIndex) => {
-    //     const columns = [];
-    //     for (let i = 0; i < columnCout; i++) {
-    //         columns.push(getColumn(rowIndex, i));
-    //     }
-        
-    //     return (
-    //         <Row key={rowIndex}>
-    //             {columns}
-    //         </Row>
-    //     );
-    // }
-
-    // const rows = [];
-    // for (let i = 0; i < rowCount; i++) {
-    //     rows.push(getRow(i));
-    // }
 
 
     const getDiv = (index) => {

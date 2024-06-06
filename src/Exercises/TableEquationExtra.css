@@ -1,0 +1,39 @@
+/* TableEquationExtra.css */
+
+/* Basic styling for the table squares */
+.table-square {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* Selected squares */
+.square.selected {
+  background-color: #f0f0f0;
+}
+
+/* Correct squares */
+.square.correct {
+  background-color: #a0e68b; /* Green */
+}
+
+/* Incorrect squares */
+.square.incorrect {
+  background-color: #ff9c9c; /* Red */
+}
+
+/* Equations styling (adjust as needed) */
+.equations {
+  margin-bottom: 16px;
+  font-weight: bold;
+}

@@ -39,7 +39,6 @@ function QuestionList() {
 
             <p>{JSON.stringify(answers)}</p>
             {questions.map((question, index) => (
-                //TODO check if the answer is close 1/3 .33333333 .33
                 <Question q={question} key={index} status={CheckAnswer && (answers[index] === question.answer ? 'OK': 'WRONG')} onAnswer={(newValue) => {
                     setAnswers({
                        ...answers,
